@@ -11,7 +11,7 @@
 
 使用方法
 - 本地安装java环境
-- 从 [Release](https://github.com/peteryuanpan/qlogfetch2/releases) 中下载最新版本jar包
+- 从 [Releases](https://github.com/peteryuanpan/qlogfetch2/releases) 中下载最新版本jar包
 - 命令行下执行 java -jar qlogfetch2.jar，根据提示操作
 
 ### Commands
