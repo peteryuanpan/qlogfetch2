@@ -17,9 +17,9 @@ public class HelpReader {
     static {
         URL resource = HelpReader.class.getClassLoader().getResource("help.md");
         assert resource != null;
-        File file = new File(resource.getPath());
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new InputStreamReader(resource.openStream()));
             boolean contentIn = false;
             String className = "";
             StringBuilder sb = new StringBuilder();
@@ -40,6 +40,14 @@ public class HelpReader {
             }
         } catch (IOException e) {
             logger.error(e.getClass().getName() + " " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    logger.error(e.getClass().getName() + " " + e.getMessage());
+                }
+            }
         }
     }
 

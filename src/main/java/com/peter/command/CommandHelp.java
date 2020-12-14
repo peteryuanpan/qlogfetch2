@@ -15,7 +15,7 @@ public class CommandHelp implements CommandInterface {
 
     @Override
     public String commandName() {
-        return "-h";
+        return "help";
     }
 
     @Override
