@@ -59,6 +59,11 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 
 ### Examples
 
+java -jar qlogfetch.jar reg -ak ak -sk sk -source aliyun
+```
+2020-12-15 02:35:25.167 [main] c.p.e.ExecuteReg[23] - Write account info to .qlogfetch2\account.json
+```
+
 java -jar qlogfetch2.jar downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -worker 10 -overwrite
 ```
 2020-12-15 02:35:28.167 [main] c.p.e.d.ExecuteDownLog[24] - Start to list log urls of domain
