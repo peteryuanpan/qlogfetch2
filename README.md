@@ -21,13 +21,13 @@ help
 Qlogfetch2 version1.0.0
 
 Supported commands:
-        -h		show this message
-       reg		set access key and secret key [and source]
-      info		show access key and secret key and source
-   listlog		list all log urls of domains from date to date
-   downlog		donwload all log urls of domains from date to date to destination directory
-   downlist   download all urls of sourcefile to destination directory
-   domains		list all of domains under this account
+      help      show this message
+       reg      set access key and secret key [and source]
+      info      show access key and secret key and source
+   listlog      list all log urls of domains from date to date
+   downlog      donwload all log urls of domains from date to date to destination directory
+  downlist      download all urls of sourcefile to destination directory
+   domains      list all of domains under this account
 ```
 
 downlog
