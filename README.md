@@ -59,7 +59,7 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 
 ### Examples
 
-java -jar qlogfetch.jar reg -ak ak -sk sk -source aliyun
+java -jar qlogfetch.jar reg -ak AccessKey -sk SecretKey -source aliyun
 ```
 2020-12-15 02:35:25.167 [main] c.p.e.ExecuteReg[23] - Write account info to .qlogfetch2\account.json
 ```
