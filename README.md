@@ -17,7 +17,7 @@ qlogfetch2比qlogfetch多了一些新功能点
 使用方法
 - 本地安装 java 环境（版本号：1.8及以上）
 - 从 [Releases](https://github.com/peteryuanpan/qlogfetch2/releases) 中下载最新版本jar包
-- 命令行下执行 java -jar qlogfetch2.jar，根据提示操作，同时可以根据操作系统编写脚本（见下文Examples），将命令简化为 qlogfetch2
+- 命令行下执行 java -jar qlogfetch2.jar，根据提示操作，同时可以根据操作系统编写脚本（见下文Examples），将命令简化为 qlogfetch2 或 qlf2
 
 ### Commands
 
@@ -73,7 +73,7 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 
 ### Examples
 
-Windows下，编写一个qlogfetch2.bat文件，内容如下，将文件目录加入环境变量
+Windows下，编写一个 qlf2.bat 文件，内容如下，将文件目录加入环境变量
 
 absolute_path是操作系统中文件的完整路径（下同）
 ```
@@ -81,28 +81,28 @@ absolute_path是操作系统中文件的完整路径（下同）
 java -jar <absolute_path>/qlogfetch2.jar %*
 ```
 
-Linux下，编写一个qlogfetch2文件，内容如下，执行chmod +x qlogfetch2，将文件目录加入环境变量
+Linux下，编写一个 qlf2 文件，内容如下，执行 chmod +x qlf2，将文件目录加入环境变量
 ```
 java -jar <absolute_path>/qlogfetch2.jar $*
 ```
 
 设置七牛云账号ak/sk（可以不指定-source，默认是qiniu）
 
-qlofetch2 reg -ak AccessKey -sk SecretKey
+qlf2 reg -ak AccessKey -sk SecretKey
 ```
 2020-12-15 02:35:25.167 [main] c.p.e.ExecuteReg[23] - Write account info to .qlogfetch2\account.json
 ```
 
 设置阿里云账号ak/sk
 
-qlofetch2 reg -ak AccessKey -sk SecretKey -source aliyun
+qlf2 reg -ak AccessKey -sk SecretKey -source aliyun
 ```
 2020-12-15 02:35:25.167 [main] c.p.e.ExecuteReg[23] - Write account info to .qlogfetch2\account.json
 ```
 
 根据域名和日期下载日志
 
-qlogfetch2 downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -worker 10 -overwrite
+qlf2 downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -worker 10 -overwrite
 ```
 2020-12-15 02:35:28.167 [main] c.p.e.d.ExecuteDownLog[24] - Start to list log urls of domain
 2020-12-15 02:35:29.415 [main] c.p.e.d.ExecuteDownLog[38] - Finished listing log urls of domain
@@ -124,7 +124,7 @@ SSAccessKeyId=LTAIviCc6zy8x3xa&Signature=EAgULWgdDinjcB3SmqY0t1DjZD8%3D size 2.4
 
 根据本地文件下载日志
 
-qlogfetch2 downlist -src C:\Users\Admin\Desktop\urls.txt -dest log -worker 10 -overwrite
+qlf2 downlist -src C:\Users\Admin\Desktop\urls.txt -dest log -worker 10 -overwrite
 ```
 2020-12-15 10:24:13.700 [main] c.p.e.d.ExecuteDownLog[43] - Start to read urls from C:\Users\Admin\Desktop\urls.txt
 2020-12-15 10:24:13.703 [main] c.p.e.d.ExecuteDownLog[51] - Finished reading urls from C:\Users\Admin\Desktop\urls.txt
