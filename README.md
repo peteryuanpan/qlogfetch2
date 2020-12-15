@@ -73,7 +73,7 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 
 ### Examples
 
-Windows下，编写一个qlogfetch2.bat文件，将文件目录加入环境变量
+Windows下，编写一个qlogfetch2.bat文件，内容如下，将文件目录加入环境变量
 
 absolute_path是操作系统中文件的完整路径（下同）
 ```
@@ -81,7 +81,7 @@ absolute_path是操作系统中文件的完整路径（下同）
 java -jar <absolute_path>/qlogfetch2.jar %*
 ```
 
-Linux下，编写一个qlogfetch2.sh文件，将文件目录加入环境变量
+Linux下，编写一个qlogfetch2文件，内容如下，执行chmod +x qlogfetch2，将文件目录加入环境变量
 ```
 java -jar <absolute_path>/qlogfetch2.jar $*
 ```
