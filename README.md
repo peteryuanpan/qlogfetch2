@@ -67,12 +67,12 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 Windows下，编写一个qlogfetch2.bat文件，将文件目录加入环境变量
 ```
 @echo off
-java -jar qlogfetch2.jar %*
+java -jar <relative_path>/qlogfetch2.jar %*
 ```
 
 Linux下，编写一个qlogfetch2.sh文件，将文件目录加入环境变量
 ```
-java -jar qlogfetch2.jar $*
+java -jar <relative_path>/qlogfetch2.jar $*
 ```
 
 设置七牛云账号ak/sk（可以不指定-source，默认是qiniu）
