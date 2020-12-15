@@ -12,7 +12,7 @@
 使用方法
 - 本地安装java环境
 - 从 [Releases](https://github.com/peteryuanpan/qlogfetch2/releases) 中下载最新版本jar包
-- 命令行下执行 java -jar qlogfetch2.jar，根据提示操作
+- 命令行下执行 java -jar qlogfetch2.jar，根据提示操作，可以根据操作系统便编写脚本，简化命令为 qlogfetch2
 
 ### Commands
 
@@ -59,12 +59,27 @@ Usage: qlogfetch2 downlog -date <Date> -domains <Domains> -dest <DestDir> [-over
 
 ### Examples
 
-java -jar qlogfetch.jar reg -ak AccessKey -sk SecretKey -source aliyun
+Windows下，编写一个qlogfetch2.bat文件，将文件目录加入环境变量
+```
+@echo off
+java -jar qlogfetch2.jar %*
+```
+
+Linux下，编写一个qlogfetch2.sh文件，将文件目录加入环境变量
+```
+java -jar qlogfetch2.jar $*
+```
+
+设置账号ak/sk
+
+qlofetch2 reg -ak AccessKey -sk SecretKey -source aliyun
 ```
 2020-12-15 02:35:25.167 [main] c.p.e.ExecuteReg[23] - Write account info to .qlogfetch2\account.json
 ```
 
-java -jar qlogfetch2.jar downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -worker 10 -overwrite
+根据域名和日期下载日志
+
+qlogfetch2 downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -worker 10 -overwrite
 ```
 2020-12-15 02:35:28.167 [main] c.p.e.d.ExecuteDownLog[24] - Start to list log urls of domain
 2020-12-15 02:35:29.415 [main] c.p.e.d.ExecuteDownLog[38] - Finished listing log urls of domain
@@ -82,4 +97,23 @@ SSAccessKeyId=LTAIviCc6zy8x3xa&Signature=EAgULWgdDinjcB3SmqY0t1DjZD8%3D size 2.4
 2020-12-15 02:35:45.932 [main] c.p.e.d.ExecuteDownLog[65] - AverageSpeed: 10.44 MB/s
 2020-12-15 02:35:45.932 [main] c.p.e.d.ExecuteDownLog[66] - SuccessNumber: 65
 2020-12-15 02:35:45.933 [main] c.p.e.d.ExecuteDownLog[67] - FailedNumber: 0
+```
+
+根据本地文件下载日志
+
+qlogfetch2 downlist -src C:\Users\Admin\Desktop\urls.txt -dest log -worker 10 -overwrite
+```
+2020-12-15 10:24:13.700 [main] c.p.e.d.ExecuteDownLog[43] - Start to read urls from C:\Users\Admin\Desktop\urls.txt
+2020-12-15 10:24:13.703 [main] c.p.e.d.ExecuteDownLog[51] - Finished reading urls from C:\Users\Admin\Desktop\urls.txt
+2020-12-15 10:24:13.725 [main] c.p.e.d.ExecuteDownLog[57] - Start to download urls
+2020-12-15 10:24:15.146 [pool-1-thread-1] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog2.oss-cn-hangzhou.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_01/a.b.com_2020_12_01_030000_040000.gz?Expires=1608570579&OSSAccessKeyId=LTAIkNf2IHcKd0kT&Signature=qOTcvlligX0IJFCfz22%2FixmJgH8%3D size 940.51 KB
+...
+2020-12-15 10:27:06.907 [pool-1-thread-9] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/c.d.com/2020_12_01/c.d.com_2020_12_01_034800_035000.gz?Expires=1608570580&OSSAccessKeyId=LTAIviCc6zy8x3xa&Signature=gQkGaqf%2BEI6Y5H6Vn3wYc1Gd2mU%3D size 15.31 MB
+2020-12-15 10:27:07.204 [pool-1-thread-6] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/c.d.com/2020_12_01/c.d.com_2020_12_01_035800_040000.gz?Expires=1608570580&OSSAccessKeyId=LTAIviCc6zy8x3xa&Signature=2H40tT7BPDWzKsSkN1AsBSXQAQA%3D size 14.91 MB
+2020-12-15 10:27:07.338 [main] c.p.e.d.ExecuteDownLog[62] - Finished downloading urls
+2020-12-15 10:27:07.338 [main] c.p.e.d.ExecuteDownLog[63] - TotalSize: 474.72 MB
+2020-12-15 10:27:07.339 [main] c.p.e.d.ExecuteDownLog[64] - TotalTimeCost: 45.7 second
+2020-12-15 10:27:07.339 [main] c.p.e.d.ExecuteDownLog[65] - AverageSpeed: 10.39 MB/s
+2020-12-15 10:27:07.339 [main] c.p.e.d.ExecuteDownLog[66] - SuccessNumber: 31
+2020-12-15 10:27:07.340 [main] c.p.e.d.ExecuteDownLog[67] - FailedNumber: 0
 ```
