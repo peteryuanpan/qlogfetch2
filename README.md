@@ -81,7 +81,7 @@ absolute_path是操作系统中文件的完整路径（下同）
 java -jar <absolute_path>/qlogfetch2.jar %*
 ```
 
-Linux下，编写一个 qlf2 文件，内容如下，执行 chmod +x qlf2，将文件目录加入环境变量
+MAC/Linux下，编写一个 qlf2 文件，内容如下，执行 chmod +x qlf2，将文件目录加入环境变量
 ```
 java -jar <absolute_path>/qlogfetch2.jar $*
 ```
