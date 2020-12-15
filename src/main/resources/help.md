@@ -31,7 +31,7 @@ Usage: qlogfetch2 reg -ak <AccessKey> -sk <SecretKey> [-source <Source>]
 com.peter.command.CommandInfo
 ```
 Usage: qlogfetch2 info
-        show access key and secret key and source
+        Show access key and secret key and source
 ```
 
 com.peter.command.CommandListLog
