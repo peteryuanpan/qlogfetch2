@@ -21,6 +21,15 @@ qlogfetch2比qlogfetch多了一些新功能点
 
 ### Commands
 
+|Name|Desription|Qiniu|Aliyun|
+|--|--|--|--|
+|reg|Set access key and secret key [and source]|||
+|info|Show access key and secret key and source|||
+|listlog|List all log urls of domains from date to date|[Link](https://developer.qiniu.com/fusion/api/1226/download-the-log)|[Link](https://help.aliyun.com/document_detail/91154.html?spm=a2c4g.11174283.6.874.1bbe70356swlvg)|
+|downlog|Donwload all log urls of domains from date to date to destination directory|[Link](https://developer.qiniu.com/fusion/api/1226/download-the-log)|[Link](https://help.aliyun.com/document_detail/91154.html?spm=a2c4g.11174283.6.874.1bbe70356swlvg)|
+|downlist|Download all urls of sourcefile to destination directory|||
+|domains|List all of domains under this account|[Link](https://developer.qiniu.com/fusion/api/4246/the-domain-name#9)|[Link](https://help.aliyun.com/document_detail/91188.html?spm=a2c4g.11186623.6.851.745c4c5dSzTF6B)|
+
 help
 ```
 Qlogfetch2 version1.0.0
