@@ -65,8 +65,10 @@ public class ExecuteListLogQiniu implements ExecuteListLogInterface {
 
             resp.code = response.code();
             resp.message = response.message();
-            if (resp.code != 200)
+            if (resp.code != 200) {
+                resp.message = response.message() + ", body: " + body;
                 break;
+            }
 
             ResponseBody respbody = Json.decode(body, ResponseBody.class);
             if (respbody != null) {

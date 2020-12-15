@@ -34,21 +34,8 @@ public class ExecuteDomains {
     }
 
     public static class Response {
-
         int code;
         String message;
         String[] domains;
-
-        public int getCode() {
-            return code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public String[] getDomains() {
-            return domains;
-        }
     }
 }
