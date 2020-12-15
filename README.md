@@ -15,7 +15,7 @@ qlogfetch2比qlogfetch多了一些新功能点
 - 支持指定本地文件下载URL
 
 使用方法
-- 本地安装java环境
+- 本地安装 java 环境（版本号：1.8及以上）
 - 从 [Releases](https://github.com/peteryuanpan/qlogfetch2/releases) 中下载最新版本jar包
 - 命令行下执行 java -jar qlogfetch2.jar，根据提示操作，同时可以根据操作系统编写脚本（见下文Examples），将命令简化为 qlogfetch2
 
