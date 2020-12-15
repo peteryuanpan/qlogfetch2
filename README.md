@@ -107,9 +107,9 @@ qlf2 downlog -date 2020-12-03-03:2020-12-05-20 -domains a.b.com -dest ./log -wor
 2020-12-15 02:35:28.167 [main] c.p.e.d.ExecuteDownLog[24] - Start to list log urls of domain
 2020-12-15 02:35:29.415 [main] c.p.e.d.ExecuteDownLog[38] - Finished listing log urls of domain
 2020-12-15 02:35:29.416 [main] c.p.e.d.ExecuteDownLog[57] - Start to download urls
-2020-12-15 02:35:30.656 [pool-1-thread-3] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_03/a.b.com_2020_12_03_040000_050000.gz?Expires=1608575728&O
+2020-12-15 02:35:30.656 [pool-1-thread-3] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_03/a.b.com_2020_12_03_030000_040000.gz?Expires=1608575728&O
 SSAccessKeyId=LTAIviCc6zy8x3xa&Signature=K5jdu0nmKERNwAAIM0sZbAx%2FaBw%3D size 1.46 MB
-2020-12-15 02:35:30.795 [pool-1-thread-6] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_03/a.b.com_2020_12_03_070000_080000.gz?Expires=1608575728&O
+2020-12-15 02:35:30.795 [pool-1-thread-6] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_03/a.b.com_2020_12_03_040000_050000.gz?Expires=1608575728&O
 SSAccessKeyId=LTAIviCc6zy8x3xa&Signature=Q1I24EyzIrQQhXn%2F6P2A7V%2F3%2BJ8%3D size 2.09 MB
 ...
 2020-12-15 02:35:45.908 [pool-1-thread-3] c.p.e.d.ExecuteDownLogAbstract[92] - Success to download url http://cdnlog-sh-public.oss-cn-shanghai.aliyuncs.com/v1.l1cache/234581/a.b.com/2020_12_05/a.b.com_2020_12_05_190000_200000.gz?Expires=1608575729&O
