@@ -147,4 +147,4 @@ qlf2 downlist -src C:\Users\Admin\Desktop\urls.txt -dest log -worker 10 -overwri
 
 并发线程数设置多少？
 
-由于是日志下载，单次请求的码率会比较大，我进行过测试，一般设置 10 - 50 就够了（看客户端带宽），再往上走可能会出现 Read time out 或 服务端5XX，甚至 Out Of Memory 的情况，如果是码率比较小的接口（比如 listbucket），可以设置大很多（比如100-300），这个时候主要瓶颈在 qps，但日志下载不适用
+由于是日志下载，单次请求的码率会比较大，我进行过测试，一般设置 10 - 50 就够了（看客户端带宽），再往上走可能会出现 Read time out 或 服务端5XX，甚至 Out Of Memory（见 https://github.com/peteryuanpan/qlogfetch2/issues/1 ） 的情况，如果是码率比较小的接口（比如 listbucket），可以设置大很多（比如100-300），这个时候主要瓶颈在 qps，但日志下载不适用
