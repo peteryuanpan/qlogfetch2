@@ -1,5 +1,6 @@
 package com.peter;
 
+import com.peter.command.CommandFilter;
 import com.peter.command.CommandHelp;
 import com.peter.command.CommandInterface;
 import com.peter.command.CommandFactory;
@@ -14,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            getCommand(args).execute(args);
+            getCommand(args).execute(CommandFilter.filter(args));
         } catch (Throwable e) {
             logger.error(e.getClass().getName() + " " + e.getMessage());
         }

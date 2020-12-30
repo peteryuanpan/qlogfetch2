@@ -4,6 +4,7 @@ import com.peter.execute.ExecuteHttp;
 import com.peter.model.DownLog;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,7 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
         for (int w = 0; w < worker; w ++) {
             threadPool.submit(new Thread(() -> {
                 while (true) {
+                    // step 0: 获取idx，判断overwrite
                     int i = idx.incrementAndGet();
                     if (i >= urls.length)
                         break;
@@ -63,32 +65,41 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
                         successNumber.addAndGet(1);
                         continue;
                     }
-                    Request request = null;
+                    // step 1: http请求处理，获取数据bytes
                     Response response = null;
                     byte[] bytes = null;
                     int j = 0;
-                    try {
-                        while (j <= downLog.getRetry()) {
-                            request = http.getRequest(urls[i]);
-                            beforeRequestSend(request);
-                            logger.debug("retry times " + j + ", " + request.toString());
-                            try {
-                                response = http.get(request);
-                                logger.debug("retry times " + j + ", " + response.toString());
-                                if (response.code() == 200) {
-                                    bytes = response.body().bytes(); // important
-                                    break;
-                                }
-                            } catch (Exception e) {
-                                logger.info("retry times " + j + ", Error: " + e.getClass().getName() + ", ErrorMessage: " + e.getMessage() + ", failed to download url " + urls[i]);
+                    while (j <= downLog.getRetry()) {
+                        Request request = http.getRequest(urls[i]);
+                        beforeRequestSend(request);
+                        logger.debug("retry times " + j + ", " + request.toString());
+                        try {
+                            response = http.get(request);
+                            logger.debug("retry times " + j + ", " + response.toString());
+                            if (response.code() == 200) {
+                                ResponseBody respbody = response.body();
+                                assert respbody != null;
+                                bytes = respbody.bytes(); // important
+                                break;
                             }
-                            j ++;
+                        } catch (Exception e) {
+                            logger.info("retry times " + j + ", Error: " + e.getClass().getName() + ", ErrorMessage: " + e.getMessage() + ", failed to download url " + urls[i]);
+                            if (!(e instanceof IOException))
+                                e.printStackTrace();
+                        } finally {
+                            if (response != null)
+                                response.close(); // close response.body()
                         }
+                        j ++;
+                    }
+                    // step 2: 输出数据bytes到文件filePath
+                    OutputStream outputStream = null;
+                    try {
                         if (j <= downLog.getRetry()) { // code = 200
-                            OutputStream outputStream = new FileOutputStream(filePath);
+                            outputStream = new FileOutputStream(filePath);
+                            assert bytes != null;
                             outputStream.write(bytes);
                             outputStream.flush();
-                            outputStream.close();
                             logger.info("Success to download url " + urls[i] + " size " + ExecuteDownLog.getSize(bytes.length));
                             totalSize.addAndGet(bytes.length);
                             successNumber.addAndGet(1);
@@ -97,8 +108,13 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
                     } catch (Exception e) {
                         logger.error(e.getClass().getName() + " " + e.getMessage());
                     } finally {
-                        if (response != null)
-                            response.close();
+                        if (outputStream != null) {
+                            try {
+                                outputStream.close();
+                            } catch (Exception e) {
+                                logger.error(e.getClass().getName() + " " + e.getMessage());
+                            }
+                        }
                     }
                 }
                 countDownLatch.countDown();

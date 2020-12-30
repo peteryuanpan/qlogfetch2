@@ -1,7 +1,7 @@
 
 com.peter.command.CommandHelp
 ```
-Qlogfetch2 version1.0.0
+Qlogfetch2 version1.0.1
 
 Supported commands:
       help      show this message
