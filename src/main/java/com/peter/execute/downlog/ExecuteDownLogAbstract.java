@@ -28,11 +28,12 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
         ExecuteDownLog.Response resp = new ExecuteDownLog.Response();
 
         final long begin = System.currentTimeMillis();
+        final AtomicInteger idx = new AtomicInteger(-1);
         final AtomicLong totalSize = new AtomicLong(0);
         final AtomicInteger successNumber = new AtomicInteger(0);
         final int worker = downLog.getWorker();
         final String dest = downLog.getDest();
-        final CountDownLatch countDownLatch = new CountDownLatch(urls.length);
+        final CountDownLatch countDownLatch = new CountDownLatch(worker);
         final ExecuteHttp http = ExecuteHttp.getInstance();
 
         logger.debug("urls.length: " + urls.length);
@@ -49,51 +50,56 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
             new LinkedBlockingQueue<>()
         );
 
-        for (int w = 0; w < urls.length; w ++) {
-            final int i = w;
+        for (int w = 0; w < worker; w ++) {
             threadPool.submit(new Thread(() -> {
-                String filePath = destF.getPath() + "/" + urls[i].substring(urls[i].lastIndexOf('/') + 1, urls[i].indexOf('?'));
-                logger.debug("filePath: " + filePath);
-                if (!downLog.isOverwrite() && new File(filePath).exists()) {
-                    logger.info("Skip to download url " + urls[i] + " because file " + filePath + " exists");
-                    successNumber.addAndGet(1);
-                    return;
-                }
-                Response response = null;
-                byte[] bytes = null;
-                int j = 0;
-                try {
-                    while (j <= downLog.getRetry()) {
-                        Request request = http.getRequest(urls[i]);
-                        beforeRequestSend(request);
-                        logger.debug("retry times " + j + ", " + request.toString());
-                        try {
-                            response = http.get(request);
-                            logger.debug("retry times " + j + ", " + response.toString());
-                            if (response.code() == 200) {
-                                bytes = response.body().bytes(); // important
-                                break;
-                            }
-                        } catch (Exception e) {
-                            logger.info("retry times " + j + ", Error: " + e.getClass().getName() + ", ErrorMessage: " + e.getMessage() + ", failed to download url " + urls[i]);
-                        }
-                        j ++;
-                    }
-                    if (j <= downLog.getRetry()) { // code = 200
-                        OutputStream outputStream = new FileOutputStream(filePath);
-                        outputStream.write(bytes);
-                        outputStream.flush();
-                        outputStream.close();
-                        logger.info("Success to download url " + urls[i] + " size " + ExecuteDownLog.getSize(bytes.length));
-                        totalSize.addAndGet(bytes.length);
+                while (true) {
+                    int i = idx.incrementAndGet();
+                    if (i >= urls.length)
+                        break;
+                    String filePath = destF.getPath() + "/" + urls[i].substring(urls[i].lastIndexOf('/') + 1, urls[i].indexOf('?'));
+                    logger.debug("filePath: " + filePath);
+                    if (!downLog.isOverwrite() && new File(filePath).exists()) {
+                        logger.info("Skip to download url " + urls[i] + " because file " + filePath + " exists");
                         successNumber.addAndGet(1);
-                    } else
-                        logger.info("Failed to download url " +  urls[i] + " after retrying " + downLog.getRetry());
-                } catch (Exception e) {
-                    logger.error(e.getClass().getName() + " " + e.getMessage());
-                } finally {
-                    if (response != null)
-                        response.close();
+                        continue;
+                    }
+                    Request request = null;
+                    Response response = null;
+                    String body = null;
+                    int j = 0;
+                    try {
+                        while (j <= downLog.getRetry()) {
+                            request = http.getRequest(urls[i]);
+                            beforeRequestSend(request);
+                            logger.debug("retry times " + j + ", " + request.toString());
+                            try {
+                                response = http.get(request);
+                                logger.debug("retry times " + j + ", " + response.toString());
+                                if (response.code() == 200) {
+                                    body = response.body().string();
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                logger.info("retry times " + j + ", Error: " + e.getClass().getName() + ", ErrorMessage: " + e.getMessage() + ", failed to download url " + urls[i]);
+                            }
+                            j ++;
+                        }
+                        if (j <= downLog.getRetry()) { // code = 200
+                            OutputStream outputStream = new FileOutputStream(filePath);
+                            outputStream.write(body.getBytes());
+                            outputStream.flush();
+                            outputStream.close();
+                            logger.info("Success to download url " + urls[i] + " size " + ExecuteDownLog.getSize(body.getBytes().length));
+                            totalSize.addAndGet(body.getBytes().length);
+                            successNumber.addAndGet(1);
+                        } else
+                            logger.info("Failed to download url " +  urls[i] + " after retrying " + downLog.getRetry());
+                    } catch (Exception e) {
+                        logger.error(e.getClass().getName() + " " + e.getMessage());
+                    } finally {
+                        if (response != null)
+                            response.close();
+                    }
                 }
                 countDownLatch.countDown();
             }));
