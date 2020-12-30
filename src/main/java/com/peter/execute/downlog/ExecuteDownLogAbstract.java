@@ -65,7 +65,7 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
                     }
                     Request request = null;
                     Response response = null;
-                    String body = null;
+                    byte[] bytes = null;
                     int j = 0;
                     try {
                         while (j <= downLog.getRetry()) {
@@ -76,7 +76,7 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
                                 response = http.get(request);
                                 logger.debug("retry times " + j + ", " + response.toString());
                                 if (response.code() == 200) {
-                                    body = response.body().string();
+                                    bytes = response.body().bytes(); // important
                                     break;
                                 }
                             } catch (Exception e) {
@@ -86,11 +86,11 @@ public abstract class ExecuteDownLogAbstract implements ExecuteDownLogInterface 
                         }
                         if (j <= downLog.getRetry()) { // code = 200
                             OutputStream outputStream = new FileOutputStream(filePath);
-                            outputStream.write(body.getBytes());
+                            outputStream.write(bytes);
                             outputStream.flush();
                             outputStream.close();
-                            logger.info("Success to download url " + urls[i] + " size " + ExecuteDownLog.getSize(body.getBytes().length));
-                            totalSize.addAndGet(body.getBytes().length);
+                            logger.info("Success to download url " + urls[i] + " size " + ExecuteDownLog.getSize(bytes.length));
+                            totalSize.addAndGet(bytes.length);
                             successNumber.addAndGet(1);
                         } else
                             logger.info("Failed to download url " +  urls[i] + " after retrying " + downLog.getRetry());
